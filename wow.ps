@@ -1,0 +1,16 @@
+import(`arithmetic operations`);
+import(`input and output`);
+
+make cell(1) names `input`;
+make cell(2) names `zero`;
+make cell(`zero`) is 48;
+
+do procedure(`Receive Character From Terminal`) am uses only and into cell(`input`);
+
+define cell(`input`) on equals cell(`zero`) [
+	do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`zero`) only and into null;
+] 
+
+define cell(`input`) for on no equal cell(`zero`) [
+    do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`input`) only and into null;
+]

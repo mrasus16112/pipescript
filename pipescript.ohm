@@ -1,0 +1,57 @@
+ScriptScript {
+    Statement = (Make | Do | Define | Serve | Block | Import) ";"? Statement?
+
+    Make = "make" (CellRaw | MealType) "names" Name    -- name
+         | "make" SpecVal "is" (Value | Number)        -- setv
+    Do = "do" Procedure "am" "uses" ListOf<Value, ","> "only" "and" "into" (SpecVal | "null")
+    Define = "define" "procedure" "names" Name Block            -- proc
+           | "define" Value "on" Comparison Value Block         -- cond
+           | "define" Value "for" "on" Comparison Value Block   -- loop 
+    Serve = "serve" (SpecVal | "null")
+    Block = "[" Statement "]"
+    Comparison = "then less"        -- lt
+               | "then less no"     -- nlt
+    Import = "import" "(" Name ")"
+
+    Param = "param" "(" Number ")"
+    Procedure = "procedure" "(" Name ")"
+
+    Value = (SpecVal | Param)
+    SpecVal = "cell" "(" Name ")"       -- cellname
+            | CellRaw                   -- cellraw
+            | MealType "(" Name ")"     -- meal
+
+    CellRaw = "cell" "(" Number ")"
+    MealType = "breakfast" | "lunch" | "dinner"
+
+    Name = "`" (~"`" any)+ "`"
+    Number = digit+
+}
+
+/*
+
+// Meals: You can have, at most, three meal types in a block. Outer meals are inaccessible in inner blocks. breakfast(name), lunch(name), dinner(name)
+
+// Keywords: make, cell, names, procedure, am, uses, only, and, into, null, define, breakfast, lungs, param, 
+			 serve, parameter, do, case
+             
+// Wordbos: am uses, only and into  
+
+import(`arithmetic operations`);
+import(`input and output`);
+
+make cell(1) names `input`;
+make cell(2) names `zero`;
+make cell(`zero`) is 48;
+
+do procedure(`Receive Character From Terminal`) am uses only and into cell(`input`);
+
+define cell(`input`) on equals cell(`zero`) [
+	do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`zero`) only and into null;
+] 
+
+define cell(`input`) for on no equal cell(`zero`) [
+    do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`input`) only and into null;
+]
+
+*/
