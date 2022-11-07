@@ -59,9 +59,11 @@ To have a control flow that acts like an if-statement in the programming languag
 import(`input and and output`);
 
 make cell(1) names `lung`;
+make cell(2) names `compare`;
 make cell(`lung`) is 3;
+make cell(`compare`) is 3;
 
-define cell(`lung`) on then less [
+define cell(`lung`) on then less cell(`compare`) [
   do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`lung`) only and into null;
 ]
 ```
