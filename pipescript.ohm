@@ -1,5 +1,5 @@
 ScriptScript {
-    Statement = (Make | Do | Define | Serve | Block | Import) ";"? Statement?
+    Statement = (Make | Do | Define | Serve | Import) ";"? Statement?
 
     Make = "make" (CellRaw | MealType) "names" Name    -- name
          | "make" SpecVal "is" (Value | Number)        -- setv
@@ -26,6 +26,9 @@ ScriptScript {
 
     Name = "`" (~"`" any)+ "`"
     Number = digit+
+
+    comment = "#" (~"#" any)* "#"
+    space += comment
 }
 
 /*
@@ -37,8 +40,8 @@ ScriptScript {
              
 // Wordbos: am uses, only and into  
 
-import(`arithmetic operations`);
-import(`input and output`);
+import(`arithmetical operations`);
+import(`input and and output`);
 
 make cell(1) names `input`;
 make cell(2) names `zero`;
