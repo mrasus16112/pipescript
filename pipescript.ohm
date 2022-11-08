@@ -1,5 +1,5 @@
 ScriptScript {
-    Statement = (Make | Do | Define | Import) ";"? Statement?
+    Statement = (Make | Do | Define | Serve | Import) ";"? Statement?
 
     Make = "make" (CellRaw | MealType) "names" Name    -- name
          | "make" SpecVal "is" (Value | Number)        -- setv
@@ -7,6 +7,7 @@ ScriptScript {
     Define = "define" "procedure" "names" Name Block            -- proc
            | "define" Value "on" Comparison Value Block         -- cond
            | "define" Value "for" "on" Comparison Value Block   -- loop 
+    Serve = "serve" (SpecVal | "null")
     Block = "[" Statement "]"
     Comparison = "then less"        -- lt
                | "then less no"     -- nlt
