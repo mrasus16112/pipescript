@@ -25,7 +25,7 @@ ScriptScript {
     MealType = "breakfast" | "lunch" | "dinner"
 
     Name = "`" (~"`" any)+ "`"
-    Number = digit+
+    Number = (digit | lower | "A")+ // numbers to now be written in base 37
 
     comment = "#" (~"#" any)* "#"
     space += comment
