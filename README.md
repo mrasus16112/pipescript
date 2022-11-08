@@ -20,7 +20,7 @@ make cell(1) names `firstcell`;
 make cell(`firstcell`) is 69;
 ```
 
-The above program will name the first cell "firstcell," and then set its value to 69.
+The above program will name the first cell "firstcell", and then set its value to 69.
 
 Now you can set values, but that is still an extremely incomplete language. To actually do things with these cells, there are many built-in procedures (or functions) which you first import with the import-statement, and then execute with the do-statement. 
 
@@ -41,7 +41,11 @@ The first cell will have the value 71.
 
 That's right. To pass values into procedures, you must place said value into a cell. Otherwise, you will have broken the fabric of space-time.
 
-## Control Flow
+### What does "only and into" mean?
+
+It lets you specify where to put the return value. In the example above, the result Add Number And Return's Number will go into cell(\`firstcell\`). 
+
+## Control Flow 1: If?
 
 Now to introduce control flow. Control flow is written with the define-statement.
 
@@ -53,7 +57,7 @@ Because it's also how you define a procedure.
 
 Yes.
 
-To have a control flow that acts like an if-statement in the programming languages you know and love, you would write something like this in PipeScript:
+In PipeScript, there is not an if-statement but instead an on-statement.
 
 ```
 import(`input and and output`);
@@ -68,4 +72,49 @@ define cell(`lung`) on then less cell(`compare`) [
 ]
 ```
 
-Figuring this out is a challenge left to the reader (that is, I am too lazy to continue writing this. Maybe someday I will. Who knows)
+There are three parts to this on-statement: the first being a comparison value, the second being a comparison operator, and the third being the second comparison value. The example above will check if cell(\`lung\`) is less than ("then less") cell(\`compare\`). If this is true, the following block is executed. 
+
+## Control Flow 1.1: Types of Comparison Operators
+
+```
+then less: check if value 1 is less than value 2
+no then less: check if value 1 is not less than value 2
+```
+
+### Wait, that's it?
+
+Correct.
+
+### How am I supposed to check if one value equals another?
+
+I am not meant to give strategies on how to use this esoteric language, but the solution involves using both comparison operators.
+
+## Control Flow 2: Loops
+
+In PipeScript, loops, or for..on loops, are almost the same thing as on-statements, except with the added keyword "for". for..on loops act like while loops in practical languages. Here's a version of the previous example, but in the form of a for..on loop.
+
+```
+import(`input and and output`);
+
+make cell(1) names `lung`;
+make cell(2) names `compare`;
+make cell(`lung`) is 3;
+make cell(`compare`) is 3;
+
+define cell(`lung`) for on then less cell(`compare`) [
+  do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`lung`) only and into null;
+]
+```
+
+### Trivia Time!!
+**What will the program above do?**
+A) Print 3 forever
+B) Nothing
+C) Define a new procedure
+D) Print 3 once
+
+If you guessed B) Nothing, you got it right!!! WOW!!!!!
+
+Why? This is because the for..on loop checks whether cell(\`lung\`) is less than cell(\`compare\`), and 3 < 3 == false. 
+
+
