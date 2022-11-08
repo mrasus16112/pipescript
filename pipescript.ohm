@@ -10,7 +10,7 @@ ScriptScript {
     Serve = "serve" (SpecVal | "null")
     Block = "[" Statement "]"
     Comparison = "then less"        -- lt
-               | "then less no"     -- nlt
+               | "no then less"     -- nlt
     Import = "import" "(" Name ")"
 
     Param = "param" "(" Number ")"

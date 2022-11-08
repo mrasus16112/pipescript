@@ -1,16 +1,35 @@
-import(`arithmetic operations`);
-import(`input and output`);
+import(`arithmetical operations`);
+import(`input and and output`);
 
-make cell(1) names `input`;
-make cell(2) names `zero`;
-make cell(`zero`) is 48;
+make cell(1) names `op`;
+make cell(2) names `n1`;
+make cell(3) names `n2`;
 
-do procedure(`Receive Character From Terminal`) am uses only and into cell(`input`);
+make cell(4) names `pl`;
+make cell(5) names `mn`;
 
-define cell(`input`) on equals cell(`zero`) [
-	do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`zero`) only and into null;
-] 
+make cell(6) names `1`;
+make cell(`1`) is 1;
 
-define cell(`input`) for on no equal cell(`zero`) [
-    do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`input`) only and into null;
+make cell(`pl`) is 16; # that's 43 in base 37 #
+make cell(`mn`) is 18; # that's 45 in base 37 #
+
+do procedure(`Get Character But Is Character`) am uses only and into cell(`op`);
+do procedure(`Get Character But Is Numbre`) am uses only and into cell(`n1`);
+do procedure(`Get Character But Is Numbre`) am uses only and into cell(`n2`);
+
+define cell(`op`) on no then less cell(`pl`) [
+    do procedure(`Add Number And Return's Number`) am uses cell(`pl`), cell(`1`) only and into null;
+    define cell(`op`) on then less cell(`pl`) [
+        do procedure(`Add Number And Return's Number`) am uses cell(`n1`), cell(`n2`) only and into cell(`n1`);
+        do procedure(`Put Character But Is Numbre`) am uses cell(`n1`) only and into null;
+    ]
+]
+
+define cell(`op`) on no then less cell(`mn`) [
+    do procedure(`Add Number And Return's Number`) am uses cell(`mn`), cell(`1`) only and into null;
+    define cell(`op`) on then less cell(`mn`) [
+        do procedure(`Subtracts Number And Return's Number`) am uses cell(`n1`), cell(`n2`) only and into cell(`n1`);
+        do procedure(`Put Character But Is Numbre`) am uses cell(`n1`) only and into null;
+    ]
 ]
