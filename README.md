@@ -108,12 +108,15 @@ define cell(`lung`) for on then less cell(`compare`) [
 
 ### Trivia Time!!
 **What will the program above do?**
+
+```
 A) Print 3 forever
 B) Nothing
 C) Define a new procedure
 D) Print 3 once
+```
 
-If you guessed B) Nothing, you got it right!!! WOW!!!!!
+If you guessed B, you got it right!!! WOW!!!!!
 
 Why? This is because the for..on loop checks whether cell(\`lung\`) is less than cell(\`compare\`), and 3 < 3 == false. 
 
