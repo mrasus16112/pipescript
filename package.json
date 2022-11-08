@@ -1,0 +1,27 @@
+{
+  "name": "pipescript",
+  "version": "0.1.1-beta",
+  "description": "An esoteric programming language that only makes sense after smoking a joint.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "ts-node index.ts wow.pis"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrasus16112/pipescript.git"
+  },
+  "keywords": [
+    "esolang",
+    "esoteric",
+    "language",
+    "ohm",
+    "ts",
+    "typescript"
+  ],
+  "author": "marsus16112",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrasus16112/pipescript/issues"
+  },
+  "homepage": "https://github.com/mrasus16112/pipescript#readme"
+}

@@ -18,4 +18,4 @@ if (match.failed()) error(2, "Did you fail English class?");
 const mapping = {};
 const syntaxTree = toAST(match, mapping);
 
-console.log("win?");
+console.log(JSON.stringify(syntaxTree, null, 2));
