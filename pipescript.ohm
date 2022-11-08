@@ -1,8 +1,9 @@
 ScriptScript {
     Statement = (Make | Do | Define | Serve | Import) ";"? Statement?
 
-    Make = "make" (CellRaw | MealType) "names" Name    -- name
-         | "make" SpecVal "is" (Value | Number)        -- setv
+    Make = "make" CellRaw "names" Name             -- cname
+         | "make" MealType "names" Name            -- mname
+         | "make" SpecVal "is" (Value | Number)    -- setv
     Do = "do" Procedure "am" "uses" ListOf<Value, ","> "only" "and" "into" (SpecVal | "null")
     Define = "define" "procedure" "names" Name Block            -- proc
            | "define" Value "on" Comparison Value Block         -- cond
