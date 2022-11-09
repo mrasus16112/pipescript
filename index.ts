@@ -19,8 +19,7 @@ const mapping = {
     "Statement_import": {file: 0},
     "Statement_make": {make: 0},
     "Make_cname": {cellidx: 1, name: 3},
-    "CellRaw": ({}, {}, num: any, {}) => Number(num.sourceString),
-    "name": ({}, name: any, {}) => name.sourceString,
+    "name": ({}, name: any, {}): string => name.sourceString,
     "Statement_do": {apply: 0},
     "Do": {name: 1, params: 4, intocell: 8},
     "Statement_define": {definition: 0},
@@ -28,6 +27,13 @@ const mapping = {
     "Define_cond": {value1: 1, compare: 3, value2: 4, block: 5},
     "Define_loop": {value1: 1, compare: 4, value2: 5, block: 6},
     "SpecVal_meal": {type: 0, name: 2},
+    "Number": (num: any) => {
+        let original: string[] = [...(num.sourceString)].reverse();
+        let range = '0123456789abcdefghijklmnopqrstuvwxyzA';
+        let converted = 0;
+        original.forEach((e, i) => converted += (37 ** i) * range.indexOf(e));
+        return {original: num.sourceString, converted};
+    },
 };
 
 const syntaxTree = toAST(match, mapping);
