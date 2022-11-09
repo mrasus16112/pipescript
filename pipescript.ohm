@@ -1,32 +1,36 @@
 ScriptScript {
     Program = Statement*
-    Statement = (Make | Do | Define | Serve | Import) ";"?
-
-    Make = "make" CellRaw "names" Name             -- cname
-         | "make" MealType "names" Name            -- mname
+    Statement = Make ";"?      -- make
+              | Do ";"?        -- do
+              | Define ";"?    -- define
+              | Serve ";"?     -- serve
+              | Import ";"?    -- import
+    // stupif
+    Make = "make" CellRaw "names" name             -- cname
+         | "make" MealType "names" name            -- mname
          | "make" SpecVal "is" (Value | Number)    -- setv
     Do = "do" Procedure "am" "uses" ListOf<Value, ","> "only" "and" "into" (SpecVal | "null")
-    Define = "define" "procedure" "names" Name Block            -- proc
+    Define = "define" "procedure" "names" name Block            -- proc
            | "define" Value "on" Comparison Value Block         -- cond
            | "define" Value "for" "on" Comparison Value Block   -- loop 
     Serve = "serve" (SpecVal | "null")
     Block = "[" Statement* "]"
     Comparison = "then less"        -- lt
                | "no then less"     -- nlt
-    Import = "import" "(" Name ")"
+    Import = "import" "(" name ")"
 
     Param = "param" "(" Number ")"
-    Procedure = "procedure" "(" Name ")"
+    Procedure = "procedure" "(" name ")"
 
     Value = (SpecVal | Param)
-    SpecVal = "cell" "(" Name ")"       -- cellname
+    SpecVal = "cell" "(" name ")"       -- cellname
             | CellRaw                   -- cellraw
-            | MealType "(" Name ")"     -- meal
+            | MealType "(" name ")"     -- meal
 
     CellRaw = "cell" "(" Number ")"
     MealType = "breakfast" | "lunch" | "dinner"
 
-    Name = "`" (~"`" any)+ "`"
+    name = "`" (~"`" any)+ "`"
     Number = (digit | lower | "A")+ // numbers to now be written in base 37
 
     comment = "#" (~"#" any)* "#"
