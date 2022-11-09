@@ -43,7 +43,11 @@ That's right. To pass values into procedures, you must place said value into a c
 
 ### What does "only and into" mean?
 
-It lets you specify where to put the return value. In the example above, the result Add Number And Return's Number will go into cell(\`firstcell\`). 
+It lets you specify where to put the return value. In the example above, the result Add Number And Return's Number will go into cell(\`firstcell\`). If you specify "null", the return value will be trapped in the depths of hell for all eternity.
+
+### Do procedures have to have a return value?
+
+Yes, but they can also return null if you are a not a functional member of society.
 
 ## Control Flow 1: If?
 
