@@ -23,7 +23,11 @@ const mapping = {
     "name": ({}, name: any, {}) => name.sourceString,
     "Statement_do": {apply: 0},
     "Do": {name: 1, params: 4, intocell: 8},
-    "Statement_define": {important: 0}
+    "Statement_define": {definition: 0},
+    "Define_proc": {name: 3, block: 4},
+    "Define_cond": {value1: 1, compare: 3, value2: 4, block: 5},
+    "Define_loop": {value1: 1, compare: 4, value2: 5, block: 6},
+    "SpecVal_meal": {type: 0, name: 2},
 };
 
 const syntaxTree = toAST(match, mapping);
