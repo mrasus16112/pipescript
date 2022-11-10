@@ -6,12 +6,12 @@ ScriptScript {
               | Serve ";"?     -- serve
               | Import ";"?    -- import
     // stupif
-    Make = "make" CellRaw "names" name             -- cname
+    Make = "make" SpecVal "names" name             -- cname
          | "make" SpecVal "is" (Value | Number)    -- setv
-    Do = "do" Procedure "am" "uses" ListOf<Value, ","> "with" "size" Number "only" "and" "into" (SpecVal | "null")
-    Define = "define" "procedure" "names" name Block            -- proc
-           | "define" Value "on" Comparison Value Block         -- cond
-           | "define" Value "for" "on" Comparison Value Block   -- loop 
+    Do = "do" Procedure "am" "uses" ListOf<Value, ","> "only" "and" "into" (SpecVal | "null")
+    Define = "define" "procedure" "names" name "with" "size" Number Block   -- proc
+           | "define" Value "on" Comparison Value Block                     -- cond
+           | "define" Value "for" "on" Comparison Value Block               -- loop 
     Serve = "serve" (SpecVal | "null")
     Block = "[" Statement* "]"
     Comparison = "then less"        -- lt
@@ -22,10 +22,8 @@ ScriptScript {
     Procedure = "procedure" "(" name ")"
 
     Value = (SpecVal | Param)
-    SpecVal = "cell" "(" name ")"       -- cellname
-            | CellRaw                   -- cellraw
-
-    CellRaw = "cell" "(" Number ")"
+    SpecVal = "cell" "(" name ")"      -- cellname
+            | "cell" "(" Number ")"    -- cellraw
 
     name = "`" (~"`" any)+ "`"
     Number = (digit | lower | "A")+ // numbers to now be written in base 37
