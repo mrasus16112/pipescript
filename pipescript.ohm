@@ -9,9 +9,9 @@ ScriptScript {
     Make = "make" SpecVal "names" name             -- cname
          | "make" SpecVal "is" (Value | Number)    -- setv
     Do = "do" Procedure "am" "uses" ListOf<Value, ","> "only" "and" "into" (SpecVal | "null")
-    Define = "define" "procedure" "names" name "with" "size" Number Block   -- proc
-           | "define" Value "on" Comparison Value Block                     -- cond
-           | "define" Value "for" "on" Comparison Value Block               -- loop 
+    Define = "define" "procedure" "names" name Block             -- proc
+           | "define" Value "on" Comparison Value Block          -- cond
+           | "define" Value "for" "on" Comparison Value Block    -- loop 
     Serve = "serve" (SpecVal | "null")
     Block = "[" Statement* "]"
     Comparison = "then less"        -- lt

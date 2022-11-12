@@ -20,21 +20,19 @@ const match = grammar.match(read(process.argv[2])); // temporary dirty fix lmao
 
 if (match.failed()) error(2, "Did you fail English class?");
 
-type node = any;
-
 const mapping = {
-    "Statement_import": {file: 0},
+    "Statement_import": {thingy: 0},
     "Statement_make": {make: 0},
     "Make_cname": {id: 1, name: 3},
-    "name": ({}, name: node, {}): string => name.sourceString,
+    "name": ({}, name: ohm.Node, {}) => name.sourceString,
     "Statement_do": {apply: 0},
     "Do": {name: 1, params: 4, into: 8},
-    "Statement_define": {definition: 0},
+    "Statement_define": {define: 0},
     "Define_proc": {name: 3, block: 4},
     "Define_cond": {value1: 1, compare: 3, value2: 4, block: 5},
     "Define_loop": {value1: 1, compare: 4, value2: 5, block: 6},
     "Statement_serve": {id: 1},
-    "Number": (num: node): {original: string, converted: number} => {
+    "Number": (num: ohm.Node) => {
         let digits: string[] = (num.sourceString).split('').reverse();
         let range = '0123456789abcdefghijklmnopqrstuvwxyzA';
         let converted = 0;
@@ -45,6 +43,7 @@ const mapping = {
     "SpecVal_cellraw": {id: 2}
 };
 
-const syntaxTree = toAST(match, mapping);
+const tree = toAST(match, mapping);
 
-console.log(JSON.stringify(syntaxTree, null, 2));
+console.log(JSON.stringify(tree, null, 2));
+
