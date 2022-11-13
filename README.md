@@ -1,4 +1,4 @@
-# PipeScript: an esoteric programming language that only makes sense after smoking a joint
+# PipeScript: a transpiled, esoteric programming language that only makes sense after smoking a joint
 Yes
 # aruoei30g?
 Wrriten in TypScrip. And Ohemr.js
@@ -11,8 +11,12 @@ soon
 # what
 
 # Introduction
+
 ## Cells and Statements
-In PipeScript, the first way to store data is within a tape of 6,969 cells. Each cell can hold a signed 64-bit integer. You access cells with the cell operator. For example, `cell(1)` references the first cell. Indexed from 1 because yes.
+
+PipeScript is an esoteric programming language that only makes sense after smoking a joint. It transpiles to either TypeScript to JavaScript, and it is meant to be as hard to remember to use as possible.
+
+In PipeScript, you store data within a tape of cells, just like in Brainf\*ck (and in most esolangs :toll:). Each cell can hold a signed 64-bit integer. You access cells with the cell operator. For example, `cell(1)` references the first cell. Indexed from 1 because yes.
 
 As with many practical languages, and some esoteric languages, comments are permitted in source code in order to explain or clarify things. In PipeScript you use the # # construct to create a comment. Comments are treated like whitespace, ignored by the parser.
 
@@ -26,7 +30,7 @@ make cell(`firstcell`) is 69;
 # The above program will name the cell(1) "firstcell", and then set its value to 69. #
 ```
 
-A word of warning, though; in PipeScript, numbers are written in base-37. (`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A`) Because of this, the program above does not set `firstcell` to the base-10 value 69, but instead the base-10 value 237.
+A word of warning, though; in PipeScript, numbers are written in base-37. (`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A`) Because of this, the program above does not set `firstcell` to the base-10 value 69, but instead the base-10 value 237. You can customize which base you use for numbers, but will be shown in a later section.
 
 ## Thingies and Procedures
 
@@ -43,7 +47,11 @@ make cell(`bean`) is 2;
 do procedure(`Add Number And Return's Number`) am from cell(`firstcell`) only and into cell(`firstcell`); # execute procedure #
 ```
 
-The `Add Number And Return's Number` procedure comes from the `arithmetical operations` thingy, and it serves the sum of two values. But what values? Well, you specify which cell you choose to be the first parameter, and consecutive cells will be used as subsequent parameters. The `Add Number And Return's Number` only uses the first two parameters provided. Because the first parameter `firstcell` is at index 1, the next parameter will be at inde 2, and that's `bean`. In PipeScript, a procedure does not have a defined amount of parameters, so parameters only really represent a subsection of the tape that a procedure can access.
+The `Add Number And Return's Number` procedure comes from the `arithmetical operations` thingy, and it serves the sum of two parameters. 
+
+### How do parameters work in PipeScript?
+
+Think of parameters as a subsection of the tape. The cell you provide in the `am from` construct is the first parameter, and the next cell in the tape sequentially is the second parameter, and the next is the third, and so on. So, in the program above, the result will be the sum of the value of `cell(1)` or `firstcell`, and the value of `cell(2)` or `bean`.
 
 ### What does "only and into" mean? Where did the serve value go?
 
@@ -55,7 +63,7 @@ Yes, but they can also serve `null` if you are a not a functional member of soci
 
 ## Rule of the Raw
 
-This is fundamental idea in PipeScript. Literals, or AST nodes whose underlying value can be determined at parse-time, such as the number `390lungf0x37A2` or the name <code>&#96;bean me&#96;</code>, cannot be passed directly into any statement with the exception of the make-statement and the define-statement for procedures, which will be covered in a later section.
+This is a fundamental idea in PipeScript. Raw values, which are values that can be determined at parse-time, such as the number `1s390lun48892834987987t4ght98f7tgh349878755775752f93b9g9bb93f000eif39929000pp3p3p3pe98s39888gf0x37A2` or the name <code>&#96;bean me&#96;</code>, cannot be passed directly into any statement with the exception of the make-statement and the define-statement for procedures.
 
 ## Control Flow 1: If?
 
@@ -128,7 +136,7 @@ D) Print 3 once
 
 If you guessed B, you got it right!!! WOW!!!!!
 
-Why? This is because the for..on loop checks whether `lung` is less than `compare`, and 3 < 3 == false.
+Why? This is because the for..on loop checks whether `lung` is less than `compare`, and `3 < 3 == false`.
 
 ## Definition of Procedures and Serving Values
 
@@ -142,30 +150,43 @@ define procedure names `Hello, world!` [
 
 ### How do I access parameters passed into a procedure?
 
-Use the param() construct to access parameters. Parameters are accessed by indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, as mentioned previously.
+Use the param() construct to access parameters. Parameters are accessed with indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, as mentioned previously. As parameters are really just a subsection of the tape, you can also pass them to procedures.
 
 ```
 import(`arithmetical operations`);
 define procedure names `add three` [
-  make cell(1) names `three`;
+  make param(1) names `three`;
   make cell(`result`) is 3;
-  do procedure(`Add Numbers And Return's Numbers`) am uses param(0), cell(`result`) only and into cell(`result`);
+  do procedure(`Add Numbers And Return's Numbers`) am from param(0) only and into cell(`result`);
   serve cell(`result`);
 ]
 ```
+## psconfig.json
 
-## Specificities of Procedures
+There are a multitude of options that you can configure for PipeScript which are put in a psconfig.json file. To make things quicker, the following format will be used to showcase all the options.
 
-### How do procedures operate with data on the tape?
+```
+property: type (default_value)
+  description
+```
 
-A procedure has two options as to how it operates with data. With the first option, the procedure creates a deep copy of the tape (not including names of cells). If you modify values in the copy, it will not modify the actual tape. With the second option, you will be able to access and modify the actual tape directly.
+---
 
-Which option the procedure will take is determined by the sum of the UTF-8 values of the characters of the name of the procedure. (Wow, that's a lot of of...) If the sum is even, the procedure will choose the first option; otherwise, the procedure will choose the second option.
+```
+tape: number (256)
+  Set the size of the tape. Must be an integer in the range 1...69420.
 
-### How are parameters and serve-values passed?
+base: number (37)
+  Set the numeric base. Must be an odd number in the range 1...37.
+ 
+endparam: number (-1)
+  Set the cell index (indexed from 0) of the last parameter for all procedures. If set to a negative value, the last parameter will be the last cell.
+  
+typescript: boolean (true)
+  Set whether you want PipeScript to transpile to JavaScript or TypeScript. TypeScript if true, JavaScript if false.
+```
 
-Parameters are passed-by-value, instead of by-reference. Likewise, serve-values are also passed-by-value.
-
+  
 ## Colophon
 
 kidn jang pengi8rue w/0 wg039g  2 quou qo3fpowefw g332oteibgb wp 0 p3 
