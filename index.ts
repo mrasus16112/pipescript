@@ -1,8 +1,6 @@
-import {readFileSync} from 'fs';
+import { readFileSync } from 'fs';
 import ohm from 'ohm-js';
-import {toAST} from 'ohm-js/extras';
-
-const tape = new BigInt64Array(6_969);
+import { toAST } from 'ohm-js/extras';
 
 function read(path: string) {
     return String(readFileSync(path));
@@ -13,7 +11,27 @@ function error(code: number, message: string) {
     process.exit(code);
 }
 
-if (Math.random() < 1/100) error(1, "I will murder you.");
+if (Math.random() < 1/100) error(-2000, "I will murder you.");
+
+interface Config {
+    tape: number;
+    base: number;
+    endparam: number;
+    typescript: boolean;
+} 
+
+let config: Config = {
+    tape: 256,
+    base: 37,
+    endparam: -1,
+    typescript: true
+} as const;
+
+try {
+    config = JSON.parse(read(process.argv[3]));
+} catch (e) {
+    error(59, "psconfig.json fail!!!!");
+}
 
 const grammar = ohm.grammar(read("pipescript.ohm"));
 const match = grammar.match(read(process.argv[2])); // temporary dirty fix lmao
@@ -32,18 +50,21 @@ const mapping = {
     "Define_cond": {value1: 1, compare: 3, value2: 4, block: 5},
     "Define_loop": {value1: 1, compare: 4, value2: 5, block: 6},
     "Statement_serve": {id: 1},
-    "Number": (num: ohm.Node) => {
+    "Number"(num: ohm.Node) {
         let digits: string[] = (num.sourceString).split('').reverse();
         let range = '0123456789abcdefghijklmnopqrstuvwxyzA';
         let converted = 0;
         digits.forEach((e, i) => converted += (37 ** i) * range.indexOf(e));
         return {original: num.sourceString, converted};
     },
-    "SpecVal_cellname": {name: 2},
-    "SpecVal_cellraw": {id: 2}
+    "Cell_name": {name: 2},
+    "Cell_raw": {id: 2}
 };
 
-const tree = toAST(match, mapping);
+const tree: any = toAST(match, mapping);
 
 console.log(JSON.stringify(tree, null, 2));
 
+for (let statement of tree) {
+
+}

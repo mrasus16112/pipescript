@@ -6,56 +6,26 @@ ScriptScript {
               | Serve ";"?     -- serve
               | Import ";"?    -- import
     // stupif
-    Make = "make" SpecVal "names" name             -- cname
-         | "make" SpecVal "is" (Value | Number)    -- setv
-    Do = "do" Procedure "am" "uses" ListOf<Value, ","> "only" "and" "into" (SpecVal | "null")
+    Make = "make" Cell "names" name             -- cname
+         | "make" Cell "is" (Cell | number)     -- setv
+    Do = "do" Procedure "am" "from" Cell "only" "and" "into" (Cell | "null")
     Define = "define" "procedure" "names" name Block             -- proc
-           | "define" Value "on" Comparison Value Block          -- cond
-           | "define" Value "for" "on" Comparison Value Block    -- loop 
-    Serve = "serve" (SpecVal | "null")
+           | "define" Cell "on" Comparison Value Block          -- cond
+           | "define" Cell "for" "on" Comparison Value Block    -- loop 
+    Serve = "serve" (Cell | "null")
     Block = "[" Statement* "]"
     Comparison = "then less"        -- lt
                | "no then less"     -- nlt
     Import = "import" "(" name ")"
 
-    Param = "param" "(" Number ")"
     Procedure = "procedure" "(" name ")"
 
-    Value = (SpecVal | Param)
-    SpecVal = "cell" "(" name ")"      -- cellname
-            | "cell" "(" Number ")"    -- cellraw
+    Cell = "cell" "(" name ")"      -- name
+         | "cell" "(" number ")"    -- number
 
     name = "`" (~"`" any)+ "`"
-    Number = (digit | lower | "A")+ // numbers to now be written in base 37
+    number = (digit | lower | "A")+ // numbers shall be written in base 37
 
     comment = "#" (~"#" any)* "#"
     space += comment
-}
-
-/*
-
-// Meals: You can have, at most, three meal types in a block. Outer meals are inaccessible in inner blocks. breakfast(name), lunch(name), dinner(name)
-
-// Keywords: make, cell, names, procedure, am, uses, only, and, into, null, define, breakfast, lungs, param, 
-			 serve, parameter, do, case
-             
-// Wordbos: am uses, only and into  
-
-import(`arithmetical operations`);
-import(`input and and output`);
-
-make cell(1) names `input`;
-make cell(2) names `zero`;
-make cell(`zero`) is 48;
-
-do procedure(`Receive Character From Terminal`) am uses only and into cell(`input`);
-
-define cell(`input`) on equals cell(`zero`) [
-	do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`zero`) only and into null;
-] 
-
-define cell(`input`) for on no equal cell(`zero`) [
-    do procedure(`Put Character But Is Number In For Terminal`) am uses cell(`input`) only and into null;
-]
-
-*/
+}// fovjidfdszsrhfvfdsvoiesdvi hdszo hvds gbfdk sgbrsedfkjvehdsklghdsz.kbjhdfsflkvjhsdaflvkjdhsfvkjdszfvlkjsdrfvlersehblrkejhgse;dhgbd'sbrds' gboreve'sioghvelkj tgheslkj ghge'gege'd' '  fivhsdfhewgklvher lgehrs gbed fvrsd 'f'      'fff' fff'ffff "fff" "fff" "fff" "fff'f "fff" 'fff"f"f'f'f'f'f'f'f''ffff'ffff'fff'ffff'fff'ff''fffff'"ffff'"`` `` `` ` ` `  ` `
