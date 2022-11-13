@@ -10,8 +10,8 @@ ScriptScript {
          | "make" Cell "is" (Cell | number)     -- setv
     Do = "do" Procedure "am" "from" Cell "only" "and" "into" (Cell | "null")
     Define = "define" "procedure" "names" name Block             -- proc
-           | "define" Cell "on" Comparison Value Block          -- cond
-           | "define" Cell "for" "on" Comparison Value Block    -- loop 
+           | "define" Cell "on" Comparison Cell Block          -- cond
+           | "define" Cell "for" "on" Comparison Cell Block    -- loop 
     Serve = "serve" (Cell | "null")
     Block = "[" Statement* "]"
     Comparison = "then less"        -- lt
@@ -24,7 +24,7 @@ ScriptScript {
          | "cell" "(" number ")"    -- number
 
     name = "`" (~"`" any)+ "`"
-    number = (digit | lower | "A")+ // numbers shall be written in base 37
+    number = (digit | lower | "A".."Y")+ // numbers shall be written in base 37
 
     comment = "#" (~"#" any)* "#"
     space += comment

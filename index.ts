@@ -2,6 +2,8 @@ import { readFileSync } from 'fs';
 import ohm from 'ohm-js';
 import { toAST } from 'ohm-js/extras';
 
+const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY';
+
 function read(path: string) {
     return String(readFileSync(path));
 }
@@ -39,17 +41,17 @@ const mapping = {
     "Make_cname": {id: 1, name: 3},
     "name": ({}, name: ohm.Node, {}) => name.sourceString,
     "Statement_do": {apply: 0},
-    "Do": {name: 1, params: 4, into: 8},
+    "Do": {name: 1, word: 3, params: 4, into: 8},
     "Statement_define": {define: 0},
     "Define_proc": {name: 3, block: 4},
     "Define_cond": {value1: 1, compare: 3, value2: 4, block: 5},
     "Define_loop": {value1: 1, compare: 4, value2: 5, block: 6},
     "Statement_serve": {id: 1},
-    "Number"(num: ohm.Node) {
+    "number"(num: ohm.Node) {
         let digits: string[] = (num.sourceString).split('').reverse();
-        let range = '0123456789abcdefghijklmnopqrstuvwxyzA';
+        let allowedDigits = digitRange.substring(0, config.base);
         let converted = 0;
-        digits.forEach((e, i) => converted += (37 ** i) * range.indexOf(e));
+        digits.forEach((e, i) => converted += (37 ** i) * allowedDigits.indexOf(e));
         return {original: num.sourceString, converted};
     },
     "Cell_name": {name: 2},
