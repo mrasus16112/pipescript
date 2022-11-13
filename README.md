@@ -1,4 +1,4 @@
-# PipeScript: an esoteric programming language that only makes sense after smoking a joint
+# PipeScript: a transpiled, esoteric programming language that only makes sense after smoking a joint
 Yes
 # aruoei30g?
 Wrriten in TypScrip. And Ohemr.js
@@ -11,6 +11,7 @@ soon
 # what
 # Introduction
 ## Cells and Statements
+
 In PipeScript, the first way to store data is within a tape of 6,969 cells. Each cell can hold a signed 64-bit integer. You access cells with the cell operator. For example, `cell(1)` references the first cell and `cell(5862)` references the five thousand eight hundred sixty-second cell. Indexed from 1 because yes.
 
 It's not all that useful to just have cells you can't do anything with, so you use a make-statement to set values of these cells. In addition, you can name cells with make-statements, and in this way they act sort of like variables. 
@@ -80,13 +81,9 @@ then less: check if value 1 is less than value 2
 no then less: check if value 1 is not less than value 2
 ```
 
-### Wait, that's it?
+### How am I supposed to check if one cell equals another, or compare in different ways?
 
-Correct.
-
-### How am I supposed to check if one cell equals another?
-
-I am not meant to give strategies on how to use this esoteric language, but the solution involves using both comparison operators.
+EGESOGESGPEeedibj85y48e8egyg8e9u38eog3e93e93ue4ye9999666gggggggtt9ppeghh;.',;.'<?">?<>"..][0ru0uuuuuuuuuuuuuuuuu009)(*hg);"//---lj,hjh f
 
 ## Control Flow 2: Loops
 
@@ -126,12 +123,15 @@ We've used procedures in premade thingies, but how do you make your own procedur
 ```
 define procedure names `Hello, world!` [
   # print hello world here #
+  make cell(69) is 4;
+  serve cell(69);
 ]
 ```
+In every procedure, you must serve something, whether you want to or not.
 
 ### How do I access parameters that would be passed in to a procedure?
 
-Use the param() construct to access parameters. Parameters are accessed by indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, but the maximum amount of parameters available to a procedure is 6969.
+Use the param() construct to access parameters. Parameters are accessed by indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, but the maximum amount of parameters available to a procedure is a random number from 2 to 69 generated at the start of transpilation.
 
 ```
 import(`arithmetical operations`);
@@ -155,3 +155,6 @@ Which option the procedure will take is determined by the sum of the UTF-8 value
 
 Parameters are passed-by-value, instead of by-reference. Likewise, serve-values are also passed-by-value.
 
+## Under The Transpiler
+
+The transpiler generates TS code by pushing sections to an array of strings. Sections are formed after converting every individual statement to a TS equivalent. Effectively, to run a PipeScript program, you will have to pass code through 3 languages: one transpiled, one compiled, and one interpreted.

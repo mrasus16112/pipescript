@@ -14,8 +14,8 @@
     "esolang",
     "esoteric",
     "language",
-    "ohm",
-    "ts",
+    "ohmjs",
+    "transpiler",
     "typescript"
   ],
   "author": "marsus16112",
@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/mrasus16112/pipescript/issues"
   },
-  "homepage": "https://github.com/mrasus16112/pipescript#readme"
+  "homepage": "https://github.com/mrasus16112/pipescript#readme",
+  "dependencies": {
+    "ohm-js": "^16.4.0",
+    "yargs": "^17.6.2"
+  }
 }
