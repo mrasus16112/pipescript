@@ -13,14 +13,7 @@ function error(code: number, message: string) {
 
 if (Math.random() < 1/100) error(-2000, "I will murder you.");
 
-interface Config {
-    tape: number;
-    base: number;
-    endparam: number;
-    typescript: boolean;
-} 
-
-let config: Config = {
+let config = {
     tape: 256,
     base: 37,
     endparam: -1,
@@ -32,6 +25,8 @@ try {
 } catch (e) {
     error(59, "psconfig.json fail!!!!");
 }
+
+const outputText: string[] = [`type Cell = { name?: string, val: bigint }`, `const tape: Cell[] = new Array(${config.tape}).fill({val: 0});`];
 
 const grammar = ohm.grammar(read("pipescript.ohm"));
 const match = grammar.match(read(process.argv[2])); // temporary dirty fix lmao
@@ -65,6 +60,11 @@ const tree: any = toAST(match, mapping);
 
 console.log(JSON.stringify(tree, null, 2));
 
+let indentLevel = 0;
 for (let statement of tree) {
-
+    switch (statement.type) {
+        
+    }
 }
+
+console.log(outputText.join('\n'));
