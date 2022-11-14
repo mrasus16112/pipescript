@@ -1,6 +1,8 @@
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
+import { SourceMapping } from 'module';
 import ohm from 'ohm-js';
 import { toAST } from 'ohm-js/extras';
+import thingies from './extras/procedures';
 
 const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY';
 
@@ -19,7 +21,6 @@ let config = {
     tape: 256,
     base: 37,
     endparam: -1,
-    typescript: true
 } as const;
 
 try {
@@ -28,15 +29,12 @@ try {
     error(59, "psconfig.json fail!!!!");
 }
 
-const outputText: string[] = [`type Cell = { name?: string, val: bigint }`, `const tape: Cell[] = new Array(${config.tape}).fill({val: 0});`];
-
 const grammar = ohm.grammar(read("pipescript.ohm"));
 const match = grammar.match(read(process.argv[2])); // temporary dirty fix lmao
 
 if (match.failed()) error(2, "Did you fail English class?");
 
 const mapping = {
-    "Statement_import": {thingy: 0},
     "Statement_make": {make: 0},
     "Make_cname": {id: 1, name: 3},
     "name": ({}, name: ohm.Node, {}) => name.sourceString,
@@ -51,22 +49,17 @@ const mapping = {
         let digits: string[] = (num.sourceString).split('').reverse();
         let allowedDigits = digitRange.substring(0, config.base);
         let converted = 0;
-        digits.forEach((e, i) => converted += (37 ** i) * allowedDigits.indexOf(e));
+        digits.forEach((e, i) => converted += (config.base ** i) * allowedDigits.indexOf(e));
         return {original: num.sourceString, converted};
     },
     "Cell_name": {name: 2},
     "Cell_raw": {id: 2}
 };
 
-const tree: any = toAST(match, mapping);
+const tree = toAST(match, mapping);
 
 console.log(JSON.stringify(tree, null, 2));
 
-let indentLevel = 0;
-for (let statement of tree) {
-    switch (statement.type) {
-        
-    }
-}
+const callStack: string[] = [];
 
-console.log(outputText.join('\n'));
+function executeStatement(statement: {[key: string]: any}) {}

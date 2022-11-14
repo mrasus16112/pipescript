@@ -4,7 +4,6 @@ ScriptScript {
               | Do ";"?        -- do
               | Define ";"?    -- define
               | Serve ";"?     -- serve
-              | Import ";"?    -- import
     // stupif
     Make = "make" Cell "names" name             -- cname
          | "make" Cell "is" (Cell | number)     -- setv
