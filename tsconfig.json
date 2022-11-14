@@ -3,7 +3,8 @@
         "esModuleInterop": true,
         "noImplicitAny": true,
         "resolveJsonModule": true,
-        //"module": "NodeNext"
+        "target": "ESNext",
+        "moduleResolution": "Node"
     }
 }
 

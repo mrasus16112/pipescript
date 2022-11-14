@@ -13,11 +13,11 @@ soon
 
 ## Cells and Statements
 
-PipeScript is an esoteric programming language that only makes sense after smoking a joint. It transpiles to either TypeScript to JavaScript, and it is meant to be as hard to remember to use as possible.
+PipeScript is an esoteric programming language that only makes sense after smoking a joint. It is meant to be as hard (to remember) to use as possible.
 
-In PipeScript, you store data within a tape of cells, just like in Brainf\*ck (and in most esolangs :toll:). Each cell can hold a signed 64-bit integer. You access cells with the cell operator. For example, `cell(1)` references the first cell. Indexed from 1 because yes.
+In PipeScript, you store data within a tape of cells, just like in Brainf\*ck (and in some other esolangs :toll:). Each cell can hold an integer, specifically the JS BigInt type. You access cells with the cell operator. For example, `cell(1)` references the first cell. Indexed from 1 because yes.
 
-As with many practical languages, and some esoteric languages, comments are permitted in source code in order to explain or clarify things. In PipeScript you use the # # construct to create a comment. Comments are treated like whitespace, ignored by the parser.
+As with all practical languages, and some esolangs, comments are permitted in source code in order to explain or clarify things. In PipeScript you use the # # construct to create a comment. Comments are treated like whitespace, ignored by the parser.
 
 ## Numbers and Names 
 
@@ -33,11 +33,9 @@ A word of warning, though; in PipeScript, numbers are written in base-37. (`0, 1
 
 ## Thingies and Procedures
 
-Now you can assign values to cells, but this is still an extremely incomplete language. To actually do things with these cells, you will need to use procedures. Procedures are just like functions in practical languages. To access procedures, you will first use the import-statement and import thingies which contain procedures. Then, you use the do-statement to execute these procedures.
+Now you can assign values to cells, but this is still an extremely incomplete language. To actually do things with these cells, you will need to use procedures. Procedures are just like functions in practical languages. Use the do-statement to execute these procedures. An overview of all the procedures will be provided in a later section.
 
 ```
-import(`arithmetical operations`); # import procedures from the thingy #
-
 make cell(1) names `firstcell`;
 make cell(2) names `bean`;
 make cell(`firstcell`) is 69;
@@ -77,8 +75,6 @@ Because it's also how you define a procedure.
 Yes.
 
 ```
-import(`input and and output`);
-
 make cell(1) names `lung`;
 make cell(2) names `compare`;
 make cell(`lung`) is 3;
@@ -107,8 +103,6 @@ EGESOGESGPEeedibj85y48e8egyg8e9u38eog3e93e93ue4ye9999666gggggggtt9ppeghh;.',;.'<
 In PipeScript, loops, or for..on loops, are almost the same thing as on-statements, except with the added keyword "for". for..on loops act like while loops in practical languages. Here's a version of the previous example, but in the form of a for..on loop.
 
 ```
-import(`input and and output`);
-
 make cell(1) names `lung`;
 make cell(2) names `compare`;
 make cell(`lung`) is 3;
@@ -151,7 +145,6 @@ In every procedure, you must serve something, whether you want to or not.
 Use the param() construct to access parameters. Parameters are accessed with indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, as mentioned previously. As parameters are really just a subsection of the tape, you can also pass them to procedures.
 
 ```
-import(`arithmetical operations`);
 define procedure names `add three` [
   make param(1) names `three`;
   make cell(`result`) is 3;
@@ -179,9 +172,6 @@ base: number (37)
  
 endparam: number (-1)
   Set the cell index (indexed from 0) of the last parameter for all procedures. If set to a negative value, the last parameter will be the last cell.
-  
-typescript: boolean (true)
-  Set whether you want PipeScript to transpile to JavaScript or TypeScript. TypeScript if true, JavaScript if false.
 ```
 
   
