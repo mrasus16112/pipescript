@@ -1,0 +1,28 @@
+{
+    "title": "PipeScript Configuration",
+    "description": "Configure the way PipeScript works",
+    "type": "object",
+    "properties": {
+        "tape": {
+            "description": "The size of the tape",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 69420,
+            "default": 256
+        },
+        "base": {
+            "description": "The base for all numeric values to be written in",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 61,
+            "default": 37
+        },
+        "terminator": {
+            "description": "The code that terminates PS-strings",
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+        }
+    },
+    "required": ["tape", "base", "terminator"]
+}

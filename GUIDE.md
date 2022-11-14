@@ -154,26 +154,7 @@ define procedure names `add three` [
 ```
 ## psconfig.json
 
-There are a multitude of options that you can configure for PipeScript which are put in a psconfig.json file. To make things quicker, the following format will be used to showcase all the options.
-
-```
-property: type (default_value)
-  description
-```
-
----
-
-```
-tape: number (256)
-  Set the size of the tape. Must be an integer in the range 1...69420.
-
-base: number (37)
-  Set the numeric base. Must be an odd number in the range 1...61.
- 
-endparam: number (-1)
-  Set the cell index (indexed from 0) of the last parameter for all procedures. If set to a negative value, the last parameter will be the last cell.
-```
-
+There are a multitude of options that you can configure for PipeScript which are put in a psconfig.json file. For info on how to use this, refer to the JSON Schema file.
   
 ## Colophon
 

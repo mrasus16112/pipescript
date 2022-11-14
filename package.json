@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/mrasus16112/pipescript#readme",
   "dependencies": {
+    "@types/json-schema": "^7.0.11",
+    "ajv": "^8.11.2",
+    "json-schema": "^0.4.0",
     "ohm-js": "^16.4.0",
     "yargs": "^17.6.2"
   }

@@ -1,5 +1,11 @@
 import { readSync } from 'fs';
 
+function stringFrom(pstring: bigint[]) {
+    let term = pstring.indexOf(0n);
+    pstring = pstring.slice(0, term);
+    return String.fromCodePoint(...pstring.map(Number));
+}
+
 const procedures: {[key: string]: (params: bigint[]) => bigint} = {
     "Add Number And Return's Number": ([n1, n2]) => n1 + n2,
     "Subtract's Number And's Served Number": ([n1, n2]) => n1 - n2,
@@ -19,11 +25,15 @@ const procedures: {[key: string]: (params: bigint[]) => bigint} = {
         process.stdout.write(String.fromCharCode(Number(char)));
         return char;
     },
-    "Put String In Terminal NULL For Terminated"(str) {
-        let term = str.indexOf(0n);
-        let strterm = str.slice(0, term).map(n => String.fromCharCode(Number(n))).join('');
-        process.stdout.write(strterm);
-        return BigInt(term);
+    "Put String In Terminal For"(pstring) {
+        process.stdout.write(stringFrom(pstring));
+        return 0n;
+    },
+
+    "Index Of String Character"([pchar, ...pstring]) {
+        let string = stringFrom(pstring);
+        let char = String.fromCodePoint(Number(pchar));
+        return BigInt(string.indexOf(char));
     }
 };
 

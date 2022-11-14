@@ -2,9 +2,9 @@ import { readFileSync, readdirSync } from 'fs';
 import { SourceMapping } from 'module';
 import ohm from 'ohm-js';
 import { toAST } from 'ohm-js/extras';
-import thingies from './extras/procedures';
-
-const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY';
+import procedures from './extras/procedures';
+import yargs from 'yargs/yargs';
+import Ajv from 'ajv';
 
 function read(path: string) {
     return String(readFileSync(path));
@@ -15,24 +15,29 @@ function error(code: number, message: string) {
     process.exit(code);
 }
 
+// --- //
+
 if (Math.random() < 1/100) error(-2000, "I will murder you.");
 
-let config = {
-    tape: 256,
-    base: 37,
-    endparam: -1,
-} as const;
+// --- //
 
-try {
-    config = JSON.parse(read(process.argv[3]));
-} catch (e) {
-    error(59, "psconfig.json fail!!!!");
-}
-
-const grammar = ohm.grammar(read("pipescript.ohm"));
+const grammar = ohm.grammar(read("./pipescript.ohm"));
 const match = grammar.match(read(process.argv[2])); // temporary dirty fix lmao
 
 if (match.failed()) error(2, "Did you fail English class?");
+
+// --- //
+
+const configSchema = JSON.parse(read("./psconfig.schema.json"));
+let config = JSON.parse(read(process.argv[3])); // also dirty fix
+const ajv = new Ajv({useDefaults: true});
+const validate = ajv.compile(configSchema);
+
+if (!validate(config)) error(32, `Cannot find module ${process.argv[3]}`);
+
+// --- //
+
+const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY';
 
 const mapping = {
     "Statement_make": {make: 0},
@@ -57,8 +62,9 @@ const mapping = {
 };
 
 const tree = toAST(match, mapping);
-
 console.log(JSON.stringify(tree, null, 2));
+
+// --- //
 
 const callStack: string[] = [];
 

@@ -1,6 +1,3 @@
-import(`arithmetical operations`);
-import(`input and and output`);
-
 make cell(1) names `op`;
 make cell(2) names `n1`;
 make cell(3) names `n2`;
