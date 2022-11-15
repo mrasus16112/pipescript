@@ -129,7 +129,7 @@ Why? This is because the for..on loop checks whether `lung` is less than `compar
 
 ## Definition of Procedures and Serving Values
 
-We've used procedures in premade thingies, but how do you make your own procedures? To do this we will have to use the define-statement to define a procedure. Inside of a procedure, you can use the serve-statement to serve a value. 
+We've used procedures in premade thingies, but how do you make your own procedures? To do this we will have to use the define-statement to define a procedure. Inside of a procedure, you can use the serve-statement to serve a value.
 
 ```
 define procedure names `Hello, world!` [
@@ -142,7 +142,7 @@ In every procedure, you must serve something, whether you want to or not.
 
 ### How do I access parameters passed into a procedure?
 
-Use the param() construct to access parameters. Parameters are accessed with indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, as mentioned previously. As parameters are really just a subsection of the tape, you can also pass them to procedures.
+Use the param() construct to access parameters. Parameters are accessed with indexes, indexed from 0. The amount of parameters are not specified upfront in the procedure definition, as mentioned previously. As parameters are really just a subsection of the tape, you can also pass them to procedures. When modifying parameters, however, you will not be modifying the tape directly.
 
 ```
 define procedure names `add three` [
@@ -152,9 +152,69 @@ define procedure names `add three` [
   serve cell(`result`);
 ]
 ```
+
+## P-strings
+
+A unique feature in PipeScript is that you can effectively create strings by putting character codes one after another in the tape, which is then terminated with a specific final character code (usually 0 but you can change this). This is called a P-string. There is no special syntax to define P-strings (get good), but there are select procedures that can do several things with them. Here is an example of a program that will then print the index of every digit in the P-string `1029384756`. 
+
+```
+make cell(1) names `char`;
+make cell(`char`) is 48;
+
+make cell(2) names `string`;
+make cell(`string`) is 49;
+make cell(3) is 48;
+make cell(4) is 50;
+make cell(5) is 57;
+make cell(6) is 51;
+make cell(7) is 56;
+make cell(8) is 52;
+make cell(9) is 55;
+make cell(10) is 53;
+make cell(11) is 54;
+make cell(12) is 0; # terminate string #
+
+make cell(13) names `9`;
+make cell(13) is 57; 
+
+make cell(14) names `index`;
+
+make cell(15) names `newline`;
+make cell(`newline`);
+
+define cell(`char`) for on then less cell(`9`) [
+  do procedure(`Index of String of`) am from cell(`char`) only and into cell(`index`);
+  do procedure(`Put Character But Is Number In For Terminal`) am from cell(`index`) only and into null;
+] 
+```
+
+Interpreting this program is a challenge left for the reader.
+
 ## psconfig.json
 
-There are a multitude of options that you can configure for PipeScript which are put in a psconfig.json file. For info on how to use this, refer to the JSON Schema file.
+There are a multitude of options that you can configure for PipeScript which are put in a psconfig.json file. To make things quicker, the following format will be used to showcase all the options.
+
+```
+property: type (default_value)
+  description
+```
+
+---
+
+```
+tape: number (256)
+  The size of the tape. Must be at least 1.
+
+base: number (37)
+  The numeric base. Must be an odd number in the range 1...61.
+ 
+terminator: number (0)
+  The character code that terminates a P-string. 
+```
+
+## Procedures
+
+idk lmao go check procedures.ts you coward
   
 ## Colophon
 

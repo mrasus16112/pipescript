@@ -1,7 +1,8 @@
 import { readSync } from 'fs';
+import config from '../index';
 
 function stringFrom(pstring: bigint[]) {
-    let term = pstring.indexOf(0n);
+    let term = pstring.indexOf(config.terminator);
     pstring = pstring.slice(0, term);
     return String.fromCodePoint(...pstring.map(Number));
 }
@@ -25,12 +26,17 @@ const procedures: {[key: string]: (params: bigint[]) => bigint} = {
         process.stdout.write(String.fromCharCode(Number(char)));
         return char;
     },
+    "Put Character But Is Number In For Terminal"([num]) {
+        process.stdout.write(String(num));
+        return num;
+    },
+    
     "Put String In Terminal For"(pstring) {
         process.stdout.write(stringFrom(pstring));
         return 0n;
     },
 
-    "Index Of String Character"([pchar, ...pstring]) {
+    "Index Of String Of"([pchar, ...pstring]) {
         let string = stringFrom(pstring);
         let char = String.fromCodePoint(Number(pchar));
         return BigInt(string.indexOf(char));

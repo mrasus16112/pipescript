@@ -1,10 +1,9 @@
 import { readFileSync, readdirSync } from 'fs';
-import { SourceMapping } from 'module';
 import ohm from 'ohm-js';
 import { toAST } from 'ohm-js/extras';
 import procedures from './extras/procedures';
 import yargs from 'yargs/yargs';
-import Ajv from 'ajv';
+import merge from 'lodash.merge';
 
 function read(path: string) {
     return String(readFileSync(path));
@@ -28,12 +27,21 @@ if (match.failed()) error(2, "Did you fail English class?");
 
 // --- //
 
-const configSchema = JSON.parse(read("./psconfig.schema.json"));
-let config = JSON.parse(read(process.argv[3])); // also dirty fix
-const ajv = new Ajv({useDefaults: true});
-const validate = ajv.compile(configSchema);
+const defaultConfig = {
+    tape: 6969,
+    base: 37,
+    terminator: 0n,
+}
 
-if (!validate(config)) error(32, `Cannot find module ${process.argv[3]}`);
+let config: typeof defaultConfig = JSON.parse(read(process.argv[3]));
+
+config = merge(defaultConfig, config);
+
+if (config.tape < 1) config.tape = defaultConfig.tape;
+if (config.base < 1 || config.base > 61) config.base = defaultConfig.base;
+if (config.terminator < 0) config.terminator = defaultConfig.terminator;
+
+export default config;
 
 // --- //
 
@@ -41,7 +49,8 @@ const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 
 const mapping = {
     "Statement_make": {make: 0},
-    "Make_cname": {id: 1, name: 3},
+    "Make_cname": {cell: 1, name: 3},
+    "Make_setv": {cell: 1, val: 3},
     "name": ({}, name: ohm.Node, {}) => name.sourceString,
     "Statement_do": {apply: 0},
     "Do": {name: 1, word: 3, params: 4, into: 8},
@@ -55,7 +64,7 @@ const mapping = {
         let allowedDigits = digitRange.substring(0, config.base);
         let converted = 0;
         digits.forEach((e, i) => converted += (config.base ** i) * allowedDigits.indexOf(e));
-        return {original: num.sourceString, converted};
+        return converted;
     },
     "Cell_name": {name: 2},
     "Cell_raw": {id: 2}
@@ -66,6 +75,18 @@ console.log(JSON.stringify(tree, null, 2));
 
 // --- //
 
-const callStack: string[] = [];
+type Cell = {
+    value: bigint;
+    name?: string;
+};
 
-function executeStatement(statement: {[key: string]: any}) {}
+const callStack: string[] = [];
+const tape: Cell[] = new Array(config.tape)
+
+function executeStatement(statement: {[key: string]: any}) {
+    if (statement.type == "Make_cname") {
+        
+    } else if (statement.type == "Make_setv") {
+
+    }
+}

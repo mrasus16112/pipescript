@@ -1,16 +1,6 @@
-make cell(1) names `op`;
-make cell(2) names `n1`;
-make cell(3) names `n2`;
 
-make cell(4) names `pl`;
-make cell(5) names `mn`;
 
-make cell(6) names `1`;
-make cell(`1`) is 1;
-
-make cell(`pl`) is 16; # that's 43 in base 37 #
-make cell(`mn`) is 18; # that's 45 in base 37 #
-
+make cell(`pl`) is 16; #make cell(`mn`) is 18; 
 do procedure(`Get Character But Is Character`) am from cell(`1`) only and into cell(`op`);
 do procedure(`Get Character But Is Numbre`) am from cell(`1`) only and into cell(`n1`);
 do procedure(`Get Character But Is Numbre`) am from cell(`1`) only and into cell(`n2`);
@@ -29,4 +19,4 @@ define cell(`op`) on no then less cell(`mn`) [
         do procedure(`Subtracts Number And Return's Number`) am from cell(`n1`) only and into cell(`n1`);
         do procedure(`Put Character But Is Numbre`) am from cell(`n1`) only and into null;
     ]
-]
+]#
