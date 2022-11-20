@@ -17,7 +17,7 @@ const procedures: {[key: string]: (params: bigint[]) => bigint} = {
     "Time Fetch": () => BigInt(new Date().getTime()),
     "Number Random": ([min, max]) => BigInt(Math.random() * Number(max - min) + Number(min)),
 
-    "Get Character for in terminal"() {
+    "Get Character But is Character For in Terminal"() {
         let buf = Buffer.alloc(1);
         readSync(0, buf, 0, 1, null);
         return BigInt(buf[0]);
@@ -30,7 +30,7 @@ const procedures: {[key: string]: (params: bigint[]) => bigint} = {
         process.stdout.write(String(num));
         return num;
     },
-    
+
     "Put String In Terminal For"(pstring) {
         process.stdout.write(stringFrom(pstring));
         return 0n;
@@ -40,7 +40,7 @@ const procedures: {[key: string]: (params: bigint[]) => bigint} = {
         let string = stringFrom(pstring);
         let char = String.fromCodePoint(Number(pchar));
         return BigInt(string.indexOf(char));
-    }
+    },
 };
 
 export default procedures;

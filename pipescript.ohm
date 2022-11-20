@@ -1,29 +1,24 @@
 ScriptScript {
     Program = Statement*
-    Statement = Make ";"?      -- make
-              | Do ";"?        -- do
-              | Define ";"?    -- define
-              | Serve ";"?     -- serve
+    Statement = (Make | Do | Define | Serve | Block) ";"?
     // stupif
-    Make = "make" Cell "names" name             -- cname
-         | "make" Cell "is" (Cell | number)     -- setv
-    Do = "do" Procedure "am" "from" Cell "only" "and" "into" (Cell | "null")
-    Define = "define" "procedure" "names" name Block             -- proc
+    Make = "make" Cell "is" (number | Cell)    -- set
+         | "make" Cell "names" name            -- name
+    Do = "do" "procedure" "(" name ")" "am" "from" Cell "only" "and" "into" Cell
+    Define = "define" "procedure" "names" name Block           -- proc
            | "define" Cell "on" Comparison Cell Block          -- cond
            | "define" Cell "for" "on" Comparison Cell Block    -- loop 
-    Serve = "serve" (Cell | "null")
+    Serve = "serve" Cell
+
     Block = "[" Statement* "]"
-    Comparison = "then less"        -- lt
-               | "no then less"     -- nlt
-    Import = "import" "(" name ")"
+    Comparison = "then less"
+               | "no then less"
 
-    Procedure = "procedure" "(" name ")"
-
-    Cell = "cell" "(" name ")"      -- name
-         | "cell" "(" number ")"    -- number
+    Cell = "cell" "(" number ")"    -- index
+         | "cell" "(" name ")"      -- name
 
     name = "`" (~"`" any)+ "`"
-    number = (digit | lower | "A".."Y")+ // numbers shall be written in base 37
+    number = "-"? (digit | lower | "A".."Y")+ // numbers shall be w
 
     comment = "#" (~"#" any)* "#"
     space += comment

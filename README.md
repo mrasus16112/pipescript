@@ -9,3 +9,5 @@ PipeScript is a verbose, slow, interpreted esolang.
 - Very slow
 
 This programming language is projected to boost developer productivity and hiring rate by **872.1%**.
+
+For information on how to use PipeScript, see [the guide.](/extras/GUIDE.md)
