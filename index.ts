@@ -4,7 +4,8 @@ import { toAST } from 'ohm-js/extras';
 import procedures from './extras/procedures';
 import yargs from 'yargs/yargs';
 import merge from 'lodash.merge';
-import { text } from 'stream/consumers';
+
+// --- //
 
 function read(path: string) {
     return String(readFileSync(path));
@@ -48,22 +49,18 @@ export default config;
 
 const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY';
 
-interface Cell {
-    name?: string;
-    value: bigint;
-} 
-
-const tape: Cell[] = Array(config.tape).fill({value: 0n});
+const tape: bigint[] = Array(config.tape).fill(0n);
 const nameLookup = new Map<string, number>();
 const definedProcedures = new Map<string, Function | ohm.Node[]>();
+for (let [k, v] of Object.entries(procedures)) definedProcedures.set(k, v);
+
 let isFunction = (procedure: Function | ohm.Node[]): procedure is Function => (procedure as Function).call !== undefined;
 
 const actions: ohm.ActionDict<any> = {
     _iter: (...children) => children.map(c => c.e()),
-    
-    Statement() {
 
-    },
+    Statement: (statement, _1) => statement.e(),
+
     // primitives
     number(sign, num) {
         let digits: string[] = (num.sourceString).split('').reverse();
@@ -75,7 +72,7 @@ const actions: ohm.ActionDict<any> = {
     },
     name: (_0, text, _2) => text.sourceString,
 
-    // cell references
+    // cell references gj dihdg eri lakjfha a;sldkfj
     Cell_index: (_0, _1, index, _3) => Number(index.e()) - 1,
     Cell_name(_0, _1, name, _3) { 
         let index = nameLookup.get(name.e());
@@ -93,7 +90,7 @@ const actions: ohm.ActionDict<any> = {
         if (!procedure) error(1984, "that ain't a procedure my guy");
         if (isFunction(procedure)) {
             tape[serve.e()] = procedure(tape.slice(cell.e()));
-        } else {}
+        } else {} // veab veaugeo ewg jgeiueiifeut icbosle.lgg9 oge ugws
     }
 };
 
