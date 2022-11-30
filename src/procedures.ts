@@ -1,10 +1,9 @@
 import { readSync } from 'fs';
-import config from '../index';
+import config from './index';
 
 function stringFrom(pstring: bigint[]) {
     let term = pstring.indexOf(config.terminator);
-    pstring = pstring.slice(0, term);
-    return String.fromCodePoint(...pstring.map(Number));
+    return String.fromCodePoint(...pstring.slice(0, term).map(Number));
 }
 
 const procedures: {[key: string]: (params: bigint[]) => bigint} = {
@@ -19,7 +18,7 @@ const procedures: {[key: string]: (params: bigint[]) => bigint} = {
 
     "Get Character But is Character For in Terminal"() {
         let buf = Buffer.alloc(1);
-        readSync(0, buf, 0, 1, null);
+        readSync(1, buf, 0, 1, null);
         return BigInt(buf[0]);
     },
     "Put Character In For Terminal"([char]) {

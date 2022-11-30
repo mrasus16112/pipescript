@@ -1,3 +1,0 @@
-make cell(1) is 57;
-make cell(2) is 59;
-do procedure(`Add Number And Return's Number`) am from cell(1) only and into cell(1)

@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'fs';
 import ohm from 'ohm-js';
 import { toAST } from 'ohm-js/extras';
-import procedures from './extras/procedures';
+import procedures from './procedures';
 import yargs from 'yargs/yargs';
 import merge from 'lodash.merge';
 
@@ -52,13 +52,18 @@ const digitRange = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 const tape: bigint[] = Array(config.tape).fill(0n);
 const nameLookup = new Map<string, number>();
 const definedProcedures = new Map<string, Function | ohm.Node[]>();
+type Call = {
+    name: string;
+    ppos?: number;
+};
+const callStack: Call[] = [{name: "`"}];
+let ppos = 0; // parameter position
+
 for (let [k, v] of Object.entries(procedures)) definedProcedures.set(k, v);
 
-let isFunction = (procedure: Function | ohm.Node[]): procedure is Function => (procedure as Function).call !== undefined;
-
 const actions: ohm.ActionDict<any> = {
-    _iter: (...children) => children.map(c => c.e()),
 
+    Program: (statements) => statements.children.map(s => s.e()),
     Statement: (statement, _1) => statement.e(),
 
     // primitives
@@ -76,9 +81,10 @@ const actions: ohm.ActionDict<any> = {
     Cell_index: (_0, _1, index, _3) => Number(index.e()) - 1,
     Cell_name(_0, _1, name, _3) { 
         let index = nameLookup.get(name.e());
-        if (!index) error(948, "oh the misery every name wants to be my enemy");
+        if (!index) error(948, "oh the misery every cell name wants to be my enemy");
         return index;
     },
+    Param: (_0, _1, index, _3) => ppos + Number(index.e()) - 1,
 
     // make
     Make_set: (_0, cell, _2, val) => tape[cell.e()] = val.e(),
@@ -88,10 +94,21 @@ const actions: ohm.ActionDict<any> = {
     Do(_0, _1, _2, name, _4, _5, _6, cell, _8, _9, _10, serve) {
         let procedure = definedProcedures.get(name.e());
         if (!procedure) error(1984, "that ain't a procedure my guy");
-        if (isFunction(procedure)) {
-            tape[serve.e()] = procedure(tape.slice(cell.e()));
-        } else {} // veab veaugeo ewg jgeiueiifeut icbosle.lgg9 oge ugws
-    }
+        let params = tape.slice(cell.e());
+        if (procedure instanceof Function) return tape[serve.e()] = procedure(params);
+        
+    },
+
+    // block
+
+    // define
+    Define_cond(_0, val1, _2, comp, val2, block) {
+
+    },
+
+    // Define_loop() {
+
+    // },
 };
 
 const semantics = grammar.createSemantics();

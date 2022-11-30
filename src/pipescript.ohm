@@ -17,7 +17,7 @@ ScriptScript {
      Cell = "cell" "(" number ")"    -- index
           | "cell" "(" name ")"      -- name
 
-     Param
+     Param = "param" "(" number ")"
 
      name = "`" (~"`" any)+ "`"
      number = "-"? (digit | lower | "A".."Y")+ // numbers shall be w

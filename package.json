@@ -4,7 +4,7 @@
   "description": "An esoteric programming language that only makes sense after smoking a joint.",
   "main": "index.ts",
   "scripts": {
-    "test": "ts-node index.ts wow.pis test.json"
+    "test": "ts-node src/index.ts extras/test.pis testconfig.json"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,6 @@
     "esoteric",
     "language",
     "ohmjs",
-    "transpiler",
     "typescript"
   ],
   "author": "marsus16112",

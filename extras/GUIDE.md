@@ -15,7 +15,7 @@ soon
 This guide is oriented to those who have experience with programming, especially esoteric programming languages.
 ## Cells and Statements
 
-PipeScript is an esoteric programming language that only makes sense after smoking a joint. It is meant to be as hard (to remember) to use as possible.
+PipeScript is an esoteric programming language that only makes sense after smoking a joint. It is meant to be as hard to remember to use as possible.
 
 In PipeScript, you store data within a tape of cells. Each cell can hold an integer, specifically the JavaScript BigInt type. You access cells with the cell construct. For example, `cell(1)` references the first cell. Indexed from 1.
 
@@ -152,7 +152,7 @@ define procedure names `add three` [
 
 ## P-strings
 
-A unique feature in PipeScript is that you can effectively create strings by putting character codes one after another in the tape, which is then terminated with a specific final character code (usually 0 but you can change this). This is called a P-string. There is no special syntax to define P-strings (get good), but there are select procedures that can do several things with them. Here is an example of a program that will then print the index of every digit in the P-string `1029384756`. 
+A unique feature in PipeScript is that you can effectively create strings by putting character codes one after another in the tape, which is then terminated with a specific final character code (usually 0 but you can change this). This is called a P-string. There is no special syntax to define P-strings (get good), but there are select procedures that can do several things with them. Here is an example of a program that uses a P-string:
 
 ```
 make cell(1) names `string`;
@@ -186,6 +186,23 @@ define cell(`string`) for on then less cell(`57`) [
 
 Interpreting this program is left as an exercise to the reader.
 
+## The Pointer
+
+Wow, what a copycat!! In PipeScript, you have a pointer which can be moved across the tape, similarly to Brainf*ck. There are 3 operators for the pointer: `move`, `get`, and `set`. `move` takes in a value, perform the NOT operation on it, and will move the pointer based on the value; `get` will get the cell at the pointer; and `set` will set the cell at the pointer to the provided value. 
+
+```
+make cell(1) names `wow`;
+make cell(`wow`) is -3;
+make cell(2) names `data`;
+make cell(`data`) is 65;
+
+move cell(`wow`);
+set cell(`data`); 
+
+do procedure(`Put Character In For Terminal`) am from get only and into cell(69);
+do procedure(`Put Character In For Terminal`) am from cell(3) only and into cell(69);
+```
+
 ## psconfig.json
 
 There are a multitude of options that you can configure for PipeScript which are put in a psconfig.json file. The following format will be used to showcase all the options.
@@ -211,7 +228,7 @@ terminator: number (0)
 ## Procedures
 
 idk lmao go check extras/procedures.ts you coward
-  
+
 ## Colophon
 
 kidn jang pengi8rue w/0 wg039g  2 quou qo3fpowefw g332oteibgb wp 0 p3 

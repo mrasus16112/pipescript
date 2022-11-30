@@ -1,0 +1,2 @@
+make cell(1) names `char`;
+do procedure(`Get Character But is Character For in Terminal`) am from cell(69) only and into cell(1);
