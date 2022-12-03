@@ -40,7 +40,7 @@ let config: typeof defaultConfig = JSON.parse(read(process.argv[3]));
 config = merge(defaultConfig, config);
 
 if (config.tape < 1) config.tape = defaultConfig.tape;
-if (config.base < 1 || config.base > 61) config.base = defaultConfig.base;
+if (config.base % 2 == 1 || config.base < 1 || config.base > 61) config.base = defaultConfig.base;
 if (config.terminator < 0) config.terminator = defaultConfig.terminator;
 
 export default config;
@@ -54,16 +54,18 @@ const nameLookup = new Map<string, number>();
 const definedProcedures = new Map<string, Function | ohm.Node[]>();
 type Call = {
     name: string;
-    ppos?: number;
+    ppos: number;
 };
-const callStack: Call[] = [{name: "`"}];
+const callStack: Call[] = [{name: "`", ppos: 0}];
 let ppos = 0; // parameter position
+
+
 
 for (let [k, v] of Object.entries(procedures)) definedProcedures.set(k, v);
 
 const actions: ohm.ActionDict<any> = {
 
-    Program: (statements) => statements.children.map(s => s.e()),
+    Program: (statements) => statements.children.forEach(s => s.e()),
     Statement: (statement, _1) => statement.e(),
 
     // primitives
@@ -81,7 +83,7 @@ const actions: ohm.ActionDict<any> = {
     Cell_index: (_0, _1, index, _3) => Number(index.e()) - 1,
     Cell_name(_0, _1, name, _3) { 
         let index = nameLookup.get(name.e());
-        if (!index) error(948, "oh the misery every cell name wants to be my enemy");
+        if (!index) error(948, `oh the missouri every cell name wants to be my enemy`);
         return index;
     },
     Param: (_0, _1, index, _3) => ppos + Number(index.e()) - 1,
@@ -94,18 +96,34 @@ const actions: ohm.ActionDict<any> = {
     Do(_0, _1, _2, name, _4, _5, _6, cell, _8, _9, _10, serve) {
         let procedure = definedProcedures.get(name.e());
         if (!procedure) error(1984, "that ain't a procedure my guy");
-        let params = tape.slice(cell.e());
-        if (procedure instanceof Function) return tape[serve.e()] = procedure(params);
-        
+
+        let index = cell.e(), params = tape.slice(index), serveCell = serve.e();
+
+        if (procedure instanceof Function) return tape[serveCell] = procedure(params);
+        callStack.push({name: name.sourceString, ppos: index});
+        procedure.forEach(s => s.e());       
     },
 
     // block
 
     // define
+    Define_proc(_0, _1, _2, name, block) {
+        definedProcedures.set(name.e(), block.children);
+    },
+
+    Compare: (comparison) => ,
     Define_cond(_0, val1, _2, comp, val2, block) {
 
     },
 
+    Define_loop(_0, val1, _2, _3, comp, val2, block) {
+
+    },
+    // serve
+
+    Serve(_0, val) {
+        
+    } 
     // Define_loop() {
 
     // },
